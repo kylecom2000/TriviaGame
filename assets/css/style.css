@@ -1,0 +1,17 @@
+body {
+    text-align: center;
+    background-image: url(../images/background.jpeg);
+    background-size: 100%;
+    color: white;
+    font-family: fantasy;
+}
+
+h1 {
+    padding-top: 15px;
+    font-size: 60px;
+}
+
+.container {
+    max-width: 960px;
+    background-color: rgba(0, 0, 0, 0.521)
+}
