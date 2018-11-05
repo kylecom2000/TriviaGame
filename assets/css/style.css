@@ -6,12 +6,29 @@ body {
     font-family: fantasy;
 }
 
-h1 {
-    padding-top: 15px;
-    font-size: 60px;
+button {
+    max-height: 60px;
+    height: 60px;
+    color: black;
+    font-size: 30px;
+    line-height: 30px;
+    padding: 15px; 
+    margin: 10px;
 }
 
+button:hover {
+    background-color: grey;
+}
+
+h1 {
+    padding-top: 15px;
+    font-size: 70px;
+}
+img {
+    padding-bottom: 20px;
+}
 .container {
     max-width: 960px;
-    background-color: rgba(0, 0, 0, 0.521)
+    background-color: rgba(0, 0, 0, 0.521);
+    padding-bottom: 20px;
 }

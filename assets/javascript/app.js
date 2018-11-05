@@ -26,7 +26,8 @@ var questionChoicesImageAnswer = [{
     // question 05
     question: "What father/daughter pair released a single 'Valley Girl' which was intended to mock the valley girl image?",
     choices: ["will and Willow Smith", "Miley and Billy Ray Cyrus", "Frank and Moon Unit Zappa", "Johnny and Rosanne Cash" ],
-    image:  ["assets/images/05zappa.gif"],
+    //zappa on the shitter.
+    image:  ["assets/images/05zappa.jpg"],
     answer: 2
     }, {
     // question 06
@@ -68,112 +69,188 @@ var questionChoicesImageAnswer = [{
 
 $(document).ready(function() {
     console.log("DocReady");
-    // var triviaDiv = $("<div>");
-    // var timerDiv = $("<h3>").text();
-    // var questionDiv = $("<h3>").text();
-    // var buttonsDiv = $("<button>");
 
     var currentQuestion = 0;
+    var correct = 0;
+    var notCorrect = 0;
     // variable created to index the current question correct answer.
-    var theAnswer = questionChoicesImageAnswer[currentQuestion].choices[questionChoicesImageAnswer[currentQuestion].answer];
+    var theAnswerText = questionChoicesImageAnswer[currentQuestion].choices[questionChoicesImageAnswer[currentQuestion].answer];
 
+    // ___________________________________________________________
+    // On startup of html document, run this function....
+    startup();
+    // ___________________________________________________________
+
+    // displays a start button, waits for a click from said start button.
     function startup(){
         console.log("Startup Function")
         // create start button
         var startUpButton = $("<button>");
-        startUpButton.attr("class", "startRestart")
-        
-        $("#triviaHTML").append(startUpButton);
+        startUpButton.attr("class", "start");
+        startUpButton.text("Start");
+        // add button, and a break element to HTML
+        $("#triviaHTML").append(startUpButton).append("<br>");
+        // listen for click from the button class "startRestart"
+        $(".start").click(startRestartButton);
+    }
 
-        $(".startRestart").click(startRestartButton);
-    };
-    startup();
-
-    //START BUTTON TO START GAME
+    //BUTTON TO START GAME
     function startRestartButton() {
-        console.log("start/restart button was clicked");
+        console.log("start button was clicked");
         // clear start/restart button
-        
+        clearHTML();
         // display scared wizard of oz gif for 4 seconds
-
-        game();
+        $("#triviaHTML").append("<img src='assets/images/scared.gif'>")
+        // $("#triviaHTML").append("<br>")
+        setTimeout(game, 1000);
     }
 
     function clearHTML() {
-        // clear html for next screen
+        console.log("clearHTML function called")
+        // clear html for next function
+        $("#triviaHTML").empty();
     }
 
     function timerStart() {
         // set timer 30 seconds,
+        setTimeout(timesUp, 30000);
+        
         // display timer to HTML
+        $("#triviaHTML").append
     }
 
     function addQuestion() {
+        console.log("addQuestion function called");
+        // variable to hold question text
+        var questionText = questionChoicesImageAnswer[currentQuestion].question;
+        // create a question div
+        var questionDiv = $("<h3>").text(questionText);
+        
         // append the current question to the HTML
+        $("#triviaHTML").append(questionDiv).append("<br");
     }
 
     function choiceButtons() {
-        // append choices from current question to buttons and to html
-
-        $("#triviaHTML").append(theGif);
+        // button
+        var buttonDiv = $("<button>");
+        for (i = 0; i < questionChoicesImageAnswer[currentQuestion].choices.length; i++) {
+            var choices = questionChoicesImageAnswer[currentQuestion].choices[i];
+            var buttonStuff = $("<button>");
+            buttonStuff.text(choices);
+            buttonStuff.attr("class", "choice")
+            buttonStuff.attr("value", i);
+            // append choices from current question to buttons and to html
+            $("#triviaHTML").append(buttonStuff).append("<br>");
+        }
+        
+        
     }
 
     function gifGetter() {
         // display the current question gif to the html
         console.log("gifGetting function called");
         var gifLocation = questionChoicesImageAnswer[currentQuestion].image;
-        var theGif = $("<img>");
+        var theGif = $("<img>").append("<br");
         theGif.attr("src", gifLocation);
+        theGif.attr("alt", "AnswerGif");
         $("#triviaHTML").append(theGif);
     }
 
+    function displayAnswerText() {
+
+    }
+
+    function displayScore() {
+        //display some score correct and not notCorrect shits.
+        $("#triviaHTML").append(theScore);
+    }
 
     function wrongAnswer() {
         console.log("wrongAnswer function called");
+        notCorrect++;
+        clearHTML();
+    
         //inform user of the correct answer
-        $("#triviaHTML").append(theAnswer);
+        displayAnswerText();
         // call current question gif.
         gifGetter();
         // add one to current question counter.
         currentQuestion++;
+        setTimeout(game, 1000);
     }
 
     function rightAnswer() {
         console.log("rightAnswer function called");
+        correct++;
+        clearHTML();
         // congratulate user on answer.
 
         // call current question gif.
         gifGetter();
         // add one to current question counter.
         currentQuestion++;
+        setTimeout(game, 1000);
     }
 
     function timesUp() {
         console.log("timesUp finction called");
         // say TIMES UP, and the correct answer
+
+        //display stopped time
+
         // call current question gif.
         gifGetter();
         // add one to current question counter.
         currentQuestion++;
+        setTimeout(game, 1000);
     }
 
     function game(){
         console.log("game function called");
+      
+        clearHTML();
         // call function to display timer
+        if (currentQuestion === (questionChoicesImageAnswer.length + 1)) {
+            console.log("game was called and questionChoicesImageAnswer.length +1 was === current question")
+            // endGame();
+        }
+        // display Timer
+        timerStart();
         // call function to display question
+        addQuestion();
         // call function to display choices
+        choiceButtons();
         // listen for choice or timer to reach zero
+        $(".choice").click(choicesClicked);
         // call right, wrong, or times up function
     }
     
+    function choicesClicked(event) {
+        // CLEAR timer countdown
+        // if the button value is equal or not to the current question answer....
+        console.log(event);
+        
+        if (parseInt(event.target.value) === questionChoicesImageAnswer[currentQuestion].answer){
+            console.log("Right Answer");
+            rightAnswer();
+        }
+        else {
+            wrongAnswer();
+            console.log("Wrong Answer");
+        }
+    }
+
     function endGame() {
         console.log("endgame function called.");
         // display corect answers
         // display incorrect answers
         // display restart button which runs buttonPressed function.
+        
+        var restartButton = $("<button>");
+        restartButton.attr("class", "restart");
+        restartButton.text("Restart?");
+        // add button, and a break element to HTML
+        $("#triviaHTML").append(restartButton).append("<br>");
+        $(".restart").click(startRestartButton);
     }
-
-
-
-
 });
