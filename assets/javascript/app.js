@@ -86,6 +86,7 @@ $(document).ready(function() {
         // debugger;
         console.log("Startup Function");
         // create start button
+        $("#triviaHTML").append("<h2>10 Questions, Can you Guess them all?</h2><br>");
         var startUpButton = $("<button>");
         startUpButton.attr("class", "start");
         startUpButton.text("Start");
@@ -107,7 +108,7 @@ $(document).ready(function() {
         // display scared wizard of oz gif for 4 seconds
         $("#triviaHTML").append("<img src='assets/images/scared.gif'>");
         // $("#triviaHTML").append("<br>")
-        setTimeout(game, 1000);
+        setTimeout(game, 3000);
     }
 
     function clearHTML() {
@@ -165,18 +166,30 @@ $(document).ready(function() {
 
     function displayAnswerText() {
         console.log("displayAnswerText function called")
+        var answerWasText = questionChoicesImageAnswer[currentQuestion].choices[questionChoicesImageAnswer[currentQuestion].answer];
+
+        $("#triviaHTML").append("<h3>The answer was: " + answerWasText + "</h3>").append("<br>");
     }
 
     function displayScore() {
+        // create a score table.
+        var Answers = $("<h4>Correct Answers: " + correct + "</h4><br><h4>Incorrect Answers: " + notCorrect + "</h4><br>")
         //display some score correct and not notCorrect shits.
-        $("#triviaHTML").append(theScore);
+        $("#triviaHTML").append(Answers);
     }
 
     function wrongAnswer() {
         console.log("wrongAnswer function called");
         notCorrect++;
         clearHTML();
-    
+        // TIMER STOP
+
+        // DISPLAY TIMER
+
+        // display score
+        displayScore();
+        // tell thewm how incorrect they are.
+        $("#triviaHTML").append("<h3>That's not correct!</h3><br>");
         //inform user of the correct answer
         displayAnswerText();
         // call current question gif.
@@ -184,22 +197,28 @@ $(document).ready(function() {
         // add one to current question counter.
        
         currentQuestion++;
-        setTimeout(game, 1000);
+        setTimeout(game, 4000);
     }
 
     function rightAnswer() {
         console.log("rightAnswer function called");
         correct++;
         clearHTML();
-        // congratulate user on answer.
+        // Timer stop
 
+        // timer display
+
+        // display score
+        displayScore();
+        // congratulate user on answer.
+        $("#triviaHTML").append("<h3>That's correct!</h3><br>");
         // call current question gif.
         gifGetter();
         // add one to current question counter.
         
         currentQuestion++;
 
-        setTimeout(game, 1000);
+        setTimeout(game, 4000);
     }
 
     function timesUp() {
@@ -207,7 +226,7 @@ $(document).ready(function() {
         //display stopped time
 
         // say TIMES UP, 
-        displayScore()
+        displayScore();
         // and the correct answer
         displayAnswerText();
         // call current question gif.
@@ -215,7 +234,7 @@ $(document).ready(function() {
         // add one to current question counter.
         currentQuestion++;
         // keep screen up for 4? seconds.
-        setTimeout(game, 1000);
+        setTimeout(game, 4000);
     }
 
     function checkEndGame() {
@@ -279,10 +298,8 @@ $(document).ready(function() {
     function endGame() {
         console.log("endgame function called.");
         clearHTML();
-        // display corect answers
 
-        // display incorrect answers
-
+        displayScore();
         // display restart button which runs buttonPressed function.
         var restartButton = $("<button>");
         restartButton.attr("class", "restart");
