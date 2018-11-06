@@ -90,7 +90,7 @@ $(document).ready(function() {
             if (countdownNumber === 0){
                 timesUp();
             }
-            $("#timerHTML").text(countdownNumber);
+            $("#timerHTML").text("Timer: " + countdownNumber);
             if(countdownNumber > 0) {
                 countdown = setTimeout(countdownTrigger , 1000);
             }

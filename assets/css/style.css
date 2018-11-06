@@ -6,6 +6,10 @@ body {
     font-family: monospace;
 }
 
+#timerHTML {
+    font-size: 20px;
+}
+
 button {
     max-height: 60px;
     height: 60px;
